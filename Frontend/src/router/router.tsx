@@ -1,9 +1,9 @@
 import { createHashRouter } from "react-router";
-import App from '../view/App';
+import  WashWindowsGame from "../view/index";
 
 export const router = createHashRouter([
     {
         path: "/",
-        element: <App />,
+        element: <WashWindowsGame />,
     },
 ])
