@@ -1,24 +1,24 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    /* 移除滾動條 */
+}
+
 .background {
-    background-image: url("./bg.jpg");
     background-size: cover;
-    /* 背景图像会按比例放大，以覆盖整个背景区域 */
     background-position: center;
-    /* 背景图像居中 */
     background-repeat: no-repeat;
-    /* 防止背景图片重复 */
     height: 100vh;
-    /* 确保背景图像覆盖整个视口高度 */
     width: 100%;
-    /* 确保背景图像覆盖整个视口宽度 */
 }
 
 .container {
-    display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    height: 100vh;
     background-color: #ffffff;
-    position: relative;
-    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 .header {
@@ -36,12 +36,19 @@
 }
 
 .button {
+    text-decoration: none;
     padding: 0.5rem 1rem;
     background-color: #e5e5e5;
     color: #000000;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+}
+
+.btn {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 35px;
 }
 
 .main {
@@ -58,20 +65,18 @@
     align-items: center;
 }
 
-.window-grid {
-    width: 300px;
-    height: 300px;
-    border: 2px solid #ccc;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2px;
-    background-color: #f0f0f0;
-    margin-top: 2rem;
+.window {
+    width: 30%;
+    height: 70%;
 }
 
-.window-section {
-    background-color: #e0e0e0;
-    transition: background-color 0.3s;
+.rag {
+    width: 40%;
+    height: 60%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 60%;
+    left: 50%;
 }
 
 .controls {
@@ -82,9 +87,25 @@
 }
 
 .control-button {
-    padding: 0.5rem;
+    padding: 1rem;
     border: 1px solid #ccc;
     border-radius: 4px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    border-radius: 5px;
+    transition: transform 0.1s ease, background-color 0.1s ease;
+}
+
+.control-button.active {
+    background-color: #d1d1d1;
+    transform: scale(0.95);
+}
+
+.toggle-button {
+    margin-top: 20px;
+    padding: 5px 10px;
+    border: none;
     cursor: pointer;
 }
 
