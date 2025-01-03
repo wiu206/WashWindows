@@ -1,0 +1,53 @@
+.container {
+  width: 100%;
+  min-height: 100vh;
+  background-color: white;
+}
+
+.btn {
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 35px;
+}
+
+.header {
+  background-color: black;
+  color: white;
+  padding: 1rem;
+}
+
+.header h1 {
+  margin: 0;
+}
+
+.form-container {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.input-field {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.login-button {
+  width: 107%;
+  padding: 0.8rem;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+}
