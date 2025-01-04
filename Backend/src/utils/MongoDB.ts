@@ -8,7 +8,7 @@ export class MongoDB {
 
     constructor(info: MongoInfo) {
 
-        const url = `mongodb://${info.name}:${encodeURIComponent(info.password)}@${info.host}:${info.port}/${info.dbName}`;
+        const url = `mongodb+srv://${info.name}:${encodeURIComponent(info.password)}@${info.host}/${info.dbName}`;
 
         this.init(url).then(() => {
 
