@@ -3,7 +3,7 @@ import { Request, response, Response } from "express";
 import { UserService } from "../Service/UserService";
 import { resp } from "../utils/resp";
 import { DBResp } from "../interfaces/DBResp";
-import { Student } from "../interfaces/Student";
+import { User } from "../interfaces/User";
 require('dotenv').config()
 
 export class UserController extends Contorller {
@@ -14,31 +14,32 @@ export class UserController extends Contorller {
         this.service = new UserService();
     }
 
-    public async findAll(Request: Request, Response: Response) {
+    public async register(Request: Request, Response: Response) {
+        const resp = await this.service.register(Request.body);
+        Response.status(resp.code).send(resp);
+    }
 
-        const res: resp<Array<DBResp<Student>> | undefined> = {
+    public async login(Request: Request, Response: Response) {
+        const resp = await this.service.login(Request.body);
+        Response.status(resp.code).send(resp);
+    }
+
+    public async getAllPoints(Request: Request, Response: Response) {
+        const res: resp<Array<DBResp<User>> | undefined> = {
             code: 200,
             message: "",
             body: undefined
         }
 
-        const dbResp = await this.service.getAllStudents();
+        const dbResp = await this.service.getAllUserPoints();
         if (dbResp) {
             res.body = dbResp;
-            res.message = "find sucess";
+            res.message = "已找到所有有效用戶積分";
             Response.send(res);
         } else {
             res.code = 500;
-            res.message = "server error";
+            res.message = "伺服器異常";
             Response.status(500).send(res);
         }
-
     }
-
-    public async insertOne(Request: Request, Response: Response) {
-        const resp = await this.service.insertOne(Request.body)
-        Response.status(resp.code).send(resp)
-    }
-
-
 }

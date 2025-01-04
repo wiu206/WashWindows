@@ -14,25 +14,17 @@ export class UserRoute extends Route{
     }
 
     protected setRoutes(): void {
-        
-        this.router.get(`${this.url}findAll`,(req, res)=>{
-            this.Contorller.findAll(req, res);
+
+        this.router.post(`${this.url}register`, (req, res) => {
+            this.Contorller.register(req, res);
         })
 
-        /**
-         * 新增學生
-         * request body {
-         *  userName: string,
-         *  name: string",
-         *  department: string,
-         *  grade: string,
-         *  class: string,
-         *  Email: string
-         * } 
-         * @returns resp<Student>
-         */
-        this.router.post(`${this.url}insertOne`,(req, res)=>{
-            this.Contorller.insertOne(req, res);
+        this.router.post(`${this.url}login`, (req, res) => {
+            this.Contorller.login(req, res);
+        })
+
+        this.router.get(`${this.url}getAllPoints`,(req, res)=>{
+            this.Contorller.getAllPoints(req, res);
         })
     }
 }
