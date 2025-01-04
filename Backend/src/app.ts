@@ -12,7 +12,6 @@ export const DB = new MongoDB({
   name:process.env.DBUSER as string,
   password:process.env.DBPASSWORD as string,
   host:process.env.DBHOST as string,
-  port:process.env.DBPORT as string,
   dbName:process.env.DBNAME as string
 });
 
