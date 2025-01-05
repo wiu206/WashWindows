@@ -25,7 +25,7 @@ export class UserController extends Contorller {
     }
 
     public async getAllPoints(Request: Request, Response: Response) {
-        const res: resp<Array<DBResp<User>> | undefined> = {
+        const res: resp<Array<DBResp<Document>> | undefined> = {
             code: 200,
             message: "",
             body: undefined
@@ -41,5 +41,20 @@ export class UserController extends Contorller {
             res.message = "伺服器異常";
             Response.status(500).send(res);
         }
+    }
+
+    public async updateByUserId(Request: Request, Response: Response) {
+        const resp = await this.service.updateByUserId(Request.body);
+        Response.status(resp.code).send(resp);
+    }
+
+    public async updatePoitns(Request: Request, Response: Response) {
+        const resp = await this.service.updatePoints(Request.body);
+        Response.status(resp.code).send(resp);
+    }
+
+    public async deleteByUserId(Request: Request, Response: Response) {
+        const resp = await this.service.deleteByUserId(Request.body);
+        Response.status(resp.code).send(resp);
     }
 }

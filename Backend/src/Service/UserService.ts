@@ -31,6 +31,12 @@ export class UserService extends Service {
                 resp.message = "Email已被註冊";
                 return resp;
             }
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(info.email as string)) {
+                resp.code = 400;
+                resp.message = "電子郵件格式錯誤";
+                return resp;
+            }
             // 密碼雜湊處理
             const hashedPassword = await bcrypt.hash(info.password, 10);
             const newUserInfo = {
@@ -50,8 +56,8 @@ export class UserService extends Service {
         }
         return resp;
     }
-    public async login(loginInfo: { email: string; password: string }): Promise<resp<DBResp<User>|undefined>> {
-        const resp: resp<DBResp<User> | undefined> = {
+    public async login(loginInfo: { email: string; password: string }): Promise<resp<DBResp<Document>|undefined>> {
+        const resp: resp<DBResp<Document> | undefined> = {
             code: 200,
             message: "",
             body: undefined
@@ -74,15 +80,7 @@ export class UserService extends Service {
                 return resp;
             }
 
-            const userWithoutPassword = {
-                _id: user._id,
-                username: user.username,
-                email: user.email,
-                points: user.points
-            }
-
-            // @ts-ignore
-            resp.body = userWithoutPassword;
+            resp.body = user;
             resp.message = "登入成功";
         } catch (error) {
             resp.code = 500;
@@ -93,7 +91,7 @@ export class UserService extends Service {
         return resp;
     }
 
-    public async getAllUserPoints(): Promise<Array<DBResp<User>> | undefined> {
+    public async getAllUserPoints(): Promise<Array<DBResp<Document>> | undefined> {
         try {
             // 查詢所有使用者，只選取需要的欄位
             const users = await userModel
@@ -104,5 +102,118 @@ export class UserService extends Service {
         } catch (error) {
             return undefined;
         }
+    }
+
+    public async updateByUserId(info: {_id: string, username: string, email: string}): Promise<resp<DBResp<Document>|undefined>> {
+        const resp: resp<DBResp<Document> | undefined> = {
+            code: 200,
+            message: "",
+            body: undefined
+        }
+        try {
+            if (!info._id || !info.username || !info.email) {
+                resp.code = 400;
+                resp.message = "缺少必要資料";
+                return resp;
+            }
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(info.email)) {
+                resp.code = 400;
+                resp.message = "電子郵件格式錯誤";
+                return resp;
+            }
+
+            const existingUser = await userModel.findById(info._id);
+            if (!existingUser) {
+                resp.code = 404;
+                resp.message = "找不到使用者";
+                return resp;
+            }
+
+            if (existingUser.username === info.username && existingUser.email === info.email) {
+                resp.code = 304;
+                resp.message = "資料並未有更新";
+                return resp;
+            }
+            existingUser.username = info.username;
+            existingUser.email = info.email;
+
+            await existingUser.save();
+            
+            resp.message = "更新資料成功";
+            resp.body = existingUser;
+            return resp;
+
+        } catch (error) {
+            resp.code = 500;
+            resp.message = "伺服器異常";
+            logger.error("user updating error: ", error);
+        }
+        return resp;
+    }
+
+    public async updatePoints(info: {_id: string, points: number}): Promise<resp<DBResp<Document>|undefined>> {
+        const resp: resp<DBResp<Document> | undefined> = {
+            code: 200,
+            message: "",
+            body: undefined
+        }
+        try {
+            if (!info._id || !info.points) {
+                resp.code = 400;
+                resp.message = "缺少必要資料";
+                return resp;
+            }
+            const existingUser = await userModel.findById(info._id);
+            if (!existingUser) {
+                resp.code = 404;
+                resp.message = "找不到使用者";
+                return resp;
+            }
+            existingUser.points = info.points;
+            await existingUser.save();
+
+            resp.message = "點數更新成功";
+            resp.body = existingUser;
+            return resp;
+        }
+        catch (error) {
+            resp.code = 500;
+            resp.message = "伺服器異常";
+            logger.error("user updating points error: ", error);
+        }
+        return resp;
+    }
+
+    public async deleteByUserId(info: {_id: string, password: string}): Promise<resp<DBResp<Document>|undefined>> {
+        const resp: resp<DBResp<Document> | undefined> = {
+            code: 200,
+            message: "",
+            body: undefined
+        }
+        try {
+            const user = await userModel.findById(info._id);
+            if (!user) {
+                resp.code = 404;
+                resp.message = "找不到使用者";
+                return resp;
+            }
+            const isPasswordValid = await bcrypt.compare(info.password, user.password);
+            if (!isPasswordValid) {
+                resp.code = 401;
+                resp.message = "提供的密碼錯誤";
+                return resp;
+            }
+
+            user.delete();
+            resp.message = "刪除帳號成功";
+            return resp;
+        } catch (error) {
+            resp.code = 500;
+            resp.message = "伺服器異常";
+            logger.error("Delete By UserId error: ", error);
+        }
+
+        return resp;
     }
 }
