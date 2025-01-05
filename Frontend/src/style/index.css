@@ -109,6 +109,14 @@ body {
     cursor: pointer;
 }
 
+.control-button.current {
+    background-color: lightblue;
+}
+
+.control-button.wrong {
+    background-color: red;
+}
+
 .leaderboard {
     width: 250px;
     padding: 1rem;
@@ -116,23 +124,23 @@ body {
     border: 1px solid #ccc;
     border-radius: 8px;
     position: fixed;
-    right: -290px;
-    /* 初始隱藏在右側 */
+    left: -290px; /* 移除空格 */
     top: 50%;
     transform: translateY(-50%);
-    transition: right 0.3s ease-in-out;
+    transition: left 0.3s ease-in-out;
     height: 60vh;
     max-height: 80vh;
     overflow-y: auto;
-}
-
-.leaderboard.open {
-    right: 0;
-}
-
-.toggle-button {
+    z-index: 1000;
+  }
+  
+  .leaderboard.open {
+    left: 0;
+  }
+  
+  .toggle-button {
     position: fixed;
-    right: 0;
+    left: 0;
     top: 50%;
     transform: translateY(-50%);
     background-color: #000;
@@ -140,14 +148,13 @@ body {
     border: none;
     padding: 1rem 0.5rem;
     cursor: pointer;
-    z-index: 1000;
-    transition: right 0.3s ease-in-out;
-}
-
-.toggle-button.open {
-    right: 250px;
-}
-
+    z-index: 1001;
+    transition: left 0.3s ease-in-out;
+  }
+  
+  .toggle-button.open {
+    left: 290px;
+  }
 .play-button {
     background-color: #000000;
     color: #ffffff;
