@@ -8,12 +8,26 @@ interface Rank {
   score: number;
 }
 
+interface User {
+  name: string;
+  email: string;
+  role: string; // 新增使用者角色
+}
+
 const WashWindowsGame: React.FC = () => {
   const [score, setScore] = useState(0);
   const [currentFrame, setCurrentFrame] = useState(3);
   const [isPanelOpen, setIsPanelOpen] = useState(false);
-  const [activeKey, setActiveKey] = useState<string | null>(null);
-  const [position, setPosition] = useState({ top: 50, left: 50 }); // 預設圖片位置
+  const [currentKey, setCurrentKey] = useState<string | null>(null);
+  const [wrongAttempt, setWrongAttempt] = useState(false);
+  const [position, setPosition] = useState({ top: 50, left: 50 });
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const user: User = {
+    name: 'Green',
+    email: 'user@example.com',
+    role: '一般使用者' // 或者 '管理員'
+  };
 
   const ranks: Rank[] = [
     { user: 'User1', score: 10 },
@@ -25,48 +39,59 @@ const WashWindowsGame: React.FC = () => {
     setIsPanelOpen(!isPanelOpen);
   };
 
-  // 處理鍵盤按鍵按下
-  const handleKeyDown = (event: KeyboardEvent) => {
-    const key = event.key;
-    if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(key)) {
-      setActiveKey(key);
-      setPosition((prevPosition) => {
-        const step = 5; // 每次移動的像素
-        switch (key) {
-          case "ArrowUp":
-            return { ...prevPosition, top: Math.max(0, prevPosition.top - step) };
-          case "ArrowDown":
-            return { ...prevPosition, top: Math.min(95, prevPosition.top + step) };
-          case "ArrowLeft":
-            return { ...prevPosition, left: Math.max(0, prevPosition.left - step) };
-          case "ArrowRight":
-            return { ...prevPosition, left: Math.min(95, prevPosition.left + step) };
-          default:
-            return prevPosition;
-        }
-      });
-    }
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
   };
 
-  // 處理鍵盤按鍵釋放
-  const handleKeyUp = (event: KeyboardEvent) => {
-    const key = event.key;
-    if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(key)) {
-      setActiveKey(null);
-      // 按鍵釋放後重置位置
+  const generateRandomKey = () => {
+    const keys = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
+    return keys[Math.floor(Math.random() * keys.length)];
+  };
+
+  useEffect(() => {
+    setCurrentKey(generateRandomKey());
+  }, []);
+
+  const updatePosition = (key: string) => {
+    const step = 5;
+    setPosition((prevPosition) => {
+      switch (key) {
+        case "ArrowUp":
+          return { ...prevPosition, top: Math.max(0, prevPosition.top - step) };
+        case "ArrowDown":
+          return { ...prevPosition, top: Math.min(95, prevPosition.top + step) };
+        case "ArrowLeft":
+          return { ...prevPosition, left: Math.max(0, prevPosition.left - step) };
+        case "ArrowRight":
+          return { ...prevPosition, left: Math.min(95, prevPosition.left + step) };
+        default:
+          return prevPosition;
+      }
+    });
+
+    setTimeout(() => {
       setPosition({ top: 50, left: 50 });
+    }, 200);
+  };
+
+  const handleKeyDown = (event: KeyboardEvent) => {
+    const key = event.key;
+    if (key === currentKey) {
+      setScore((prevScore) => prevScore + 1);
+      setCurrentKey(generateRandomKey());
+      setWrongAttempt(false);
+      updatePosition(key);
+    } else if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(key)) {
+      setWrongAttempt(true);
     }
   };
 
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("keyup", handleKeyUp);
-
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("keyup", handleKeyUp);
     };
-  }, []);
+  }, [currentKey]);
 
   return (
     <div className="container">
@@ -75,6 +100,22 @@ const WashWindowsGame: React.FC = () => {
         <div className="button-group">
           <a className='button' href='#/Login'>登入</a>
           <a className='button' href='#/Register'>註冊</a>
+          <div className="user-info" onClick={toggleDropdown} style={{ cursor: 'pointer', position: 'relative' }}>
+            Hi, {user.name}
+            <div className={`dropdown ${isDropdownOpen ? 'open' : ''}`} style={{ display: isDropdownOpen ? 'block' : 'none', position: 'absolute', top: '100%', right: 0, backgroundColor: 'white', border: '1px solid #ccc', borderRadius: '4px', padding: '10px', zIndex: 1000 }}>
+              <p>名稱: {user.name}</p>
+              <p>電子郵件: {user.email}</p>
+              <p>角色: {user.role}</p>
+              <a href="#/Personal">個人資料</a>
+              {user.role === '管理員' && (
+                <>
+                  <a href="#/dashboard">管理員</a>
+                  <a href="#/Manager">管理員選項</a>
+                </>
+              )}
+              <a href="#/">登出</a>
+            </div>
+          </div>
         </div>
       </header>
 
@@ -89,8 +130,10 @@ const WashWindowsGame: React.FC = () => {
           <div
             className="rag"
             style={{
+              position: 'absolute',
               top: `${position.top}%`,
               left: `${position.left}%`,
+              transform: 'translate(-50%, -50%)',
             }}
           >
             <img className="rag" src={Rag} alt="rag" />
@@ -101,38 +144,27 @@ const WashWindowsGame: React.FC = () => {
           </div>
 
           <div className="controls">
-            <button
-              className={`control-button ${activeKey === "ArrowLeft" ? 'active' : ''}`}
-            >
-              ←
-            </button>
-            <button
-              className={`control-button ${activeKey === "ArrowUp" ? 'active' : ''}`}
-            >
-              ↑
-            </button>
-            <button
-              className={`control-button ${activeKey === "ArrowRight" ? 'active' : ''}`}
-            >
-              →
-            </button>
-            <button
-              className={`control-button ${activeKey === "ArrowDown" ? 'active' : ''}`}
-            >
-              ↓
-            </button>
+            {["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].map((key) => (
+              <button
+                key={key}
+                className={`control-button ${key === currentKey ? 'current' : ''} ${wrongAttempt && key === currentKey ? 'wrong' : ''}`}
+              >
+                {key === "ArrowUp" && "↑"}
+                {key === "ArrowDown" && "↓"}
+                {key === "ArrowLeft" && "←"}
+                {key === "ArrowRight" && "→"}
+              </button>
+            ))}
           </div>
         </div>
 
-        {/* 切換按鈕 */}
         <button
           className={`toggle-button ${isPanelOpen ? 'open' : ''}`}
           onClick={togglePanel}
         >
-          {isPanelOpen ? '▶' : '◀'}
+          {isPanelOpen ? '◀' : '▶'}
         </button>
 
-        {/* 排行榜面板 */}
         <div className={`leaderboard ${isPanelOpen ? 'open' : ''}`}>
           <h3>Rank</h3>
           {ranks.map((rank, index) => (
