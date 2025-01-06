@@ -14,7 +14,7 @@ export class UserService extends Service {
     public async getAllUserPoints(): Promise<Array<DBResp<User>> | undefined> {
         try {
             const users = await userModel
-                .find({userRole: 'user'})
+                .find({points: { $gt: 0 }})
                 .select('username points')
                 .sort({ points: -1 });
             return users;
