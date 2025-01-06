@@ -1,3 +1,4 @@
+const api_base = import.meta.env.VITE_API_URL;
 /**
  * 異步呼叫api, 只可用響應體為 json 的 api
  * @param api 要呼叫的api
@@ -16,38 +17,42 @@ export async function asyncGet(api: string):Promise<any>{
     }
 }
 
-export async function asyncPost(api: string, body: {} | FormData) {
-    const res: Response = await fetch(api, {
-        method: 'POST',
-        credentials: 'include',
-        headers:new Headers({
-            'Access-Control-Allow-Origin':"http://localhost:5173/",
-            'content-Type':"application/json"
-        }),
-        body: body instanceof FormData?body:JSON.stringify(body),
-        mode:"cors"
-    })
+export async function asyncPost(api: string, { body, headers = {} }: { body: any, headers?: HeadersInit }): Promise<Response> {
     try {
-        let data = res.json()
-        return data
+        const res: Response = await fetch(api, {
+            method: 'POST',
+            headers: {
+                'Access-Control-Allow-Origin': api_base,
+                'Content-Type': 'application/json',
+                ...headers,
+            },
+            body: body instanceof FormData ? body : JSON.stringify(body),
+            mode: 'cors',
+        });
+        
+        return res;
     } catch (error) {
-        console.error(error)
+        console.error('Request failed:', error);
+        throw error;
     }
 }
 
-export async function asyncPatch(api: string, body: {} | FormData) {
-    const res: Response = await fetch(api, {
-        method: 'PATCH',
-        headers:new Headers({
-            'Access-Control-Allow-Origin':"http://localhost:5173/",
-        }),
-        body: body instanceof FormData?body:JSON.stringify(body),
-        mode:"cors"
-    })
+export async function asyncPut(api: string, { body, headers = {} }: { body: any, headers?: HeadersInit }): Promise<Response> {
     try {
-        let data = res.json()
-        return data
+        const res: Response = await fetch(api, {
+            method: 'PUT',
+            headers: {
+                'Access-Control-Allow-Origin': api_base,
+                'Content-Type': 'application/json',
+                ...headers,
+            },
+            body: body instanceof FormData ? body : JSON.stringify(body),
+            mode: 'cors',
+        });
+        
+        return res;
     } catch (error) {
-        console.error(error)
+        console.error('Request failed:', error);
+        throw error;
     }
 }
