@@ -15,20 +15,8 @@ export class UserRoute extends Route{
 
     protected setRoutes(): void {
 
-        this.router.post(`${this.url}register`, (req, res) => {
-            this.Contorller.register(req, res);
-        })
-
-        this.router.post(`${this.url}login`, (req, res) => {
-            this.Contorller.login(req, res);
-        })
-
-        this.router.post(`${this.url}logout`, (req, res) => {
-            this.Contorller.logout(req, res);
-        })
-
-        this.router.get(`${this.url}getAllPoints`,(req, res)=>{
-            this.Contorller.getAllPoints(req, res);
+        this.router.get(`${this.url}getAllUserPoints`,(req, res)=>{
+            this.Contorller.getAllUserPoints(req, res);
         })
 
         this.router.put(`${this.url}updateByUserId`, (req, res) => {
@@ -41,6 +29,10 @@ export class UserRoute extends Route{
         
         this.router.delete(`${this.url}deleteByUserId`, (req, res) => {
             this.Contorller.deleteByUserId(req, res);
+        })
+        
+        this.router.post(`${this.url}updatePassword`, (req, res) => {
+            this.Contorller.updatePassword(req, res);
         })
     }
 }

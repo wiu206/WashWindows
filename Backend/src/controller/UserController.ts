@@ -14,28 +14,13 @@ export class UserController extends Contorller {
         this.service = new UserService();
     }
 
-    public async register(Request: Request, Response: Response) {
-        const resp = await this.service.register(Request.body);
-        Response.status(resp.code).send(resp);
-    }
-
-    public async login(Request: Request, Response: Response) {
-        const resp = await this.service.login(Request.body);
-        Response.status(resp.code).send(resp);
-    }
-
-    public async logout(Request: Request, Response: Response) {
-        const resp = await this.service.logout(Request);
-        Response.status(resp.code).send(resp);
-    }
-
-    public async getAllPoints(Request: Request, Response: Response) {
-        const res: resp<Array<DBResp<Document>> | undefined> = {
+    public async getAllUserPoints(Request: Request, Response: Response) {
+        const res: resp<Array<DBResp<User>> | undefined> = {
             code: 200,
             message: "",
             body: undefined
         }
-
+    
         const dbResp = await this.service.getAllUserPoints();
         if (dbResp) {
             res.body = dbResp;
@@ -60,6 +45,11 @@ export class UserController extends Contorller {
 
     public async deleteByUserId(Request: Request, Response: Response) {
         const resp = await this.service.deleteByUserId(Request);
+        Response.status(resp.code).send(resp);
+    }
+    
+    public async updatePassword(Request: Request, Response: Response) {
+        const resp = await this.service.updatePassword(Request);
         Response.status(resp.code).send(resp);
     }
 }
