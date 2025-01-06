@@ -1,9 +1,39 @@
+@font-face {
+    font-family: "Font";
+    src: url("/assets/zh_tw.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(46, 204, 113, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); }
+}
+@keyframes slideUp {
+    from { opacity: 0; transform: translate(-50%, 20px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+}
+@keyframes slideDown {
+    from {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+    to {
+      opacity: 0;
+      transform: translate(-50%, 20px);
+    }
+}
+
 html,
 body {
     height: 100%;
     margin: 0;
     overflow: hidden;
-    /* 移除滾動條 */
+    font-family: "Font", Arial, sans-serif;
 }
 
 .background {
@@ -15,40 +45,11 @@ body {
 }
 
 .container {
+    display: flex;
     flex-direction: column;
     height: 100vh;
     background-color: #ffffff;
     overflow-y: hidden;
-}
-
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    background-color: #000000;
-    color: #ffffff;
-}
-
-.button-group {
-    display: flex;
-    gap: 1rem;
-}
-
-.button {
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    background-color: #e5e5e5;
-    color: #000000;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.btn {
-    text-decoration: none;
-    color: #ffffff;
-    font-size: 35px;
 }
 
 .main {
@@ -63,6 +64,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
 }
 
 .window {
@@ -71,35 +73,103 @@ body {
 }
 
 .rag {
-    width: 40%;
-    height: 60%;
     position: absolute;
-    transform: translate(-50%, -50%);
-    top: 60%;
+    top: 50%;
     left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.2s ease;
+    width: 50px;
+    height: 50px;
+    z-index: 10;
+}
+
+.dirty {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50px;
+    height: 50px;
+    animation: fadeIn 0.5s ease forwards;
+    z-index: 5;
+    opacity: 1; 
+}
+
+.dirty.fade-out {
+    opacity: 0; 
+}
+
+.dirty.fade-in {
+    opacity: 1; 
+}
+
+
+.rag img {
+    width: 500%;
+    height: 500%;
+    object-fit: contain;
+}
+
+.dirty img {
+    width: 200%;
+    height: 200%;
+    object-fit: contain;
 }
 
 .controls {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.5rem;
-    margin-top: 2rem;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
 }
 
 .control-button {
-    padding: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    position: absolute;
+    padding: 0.8rem;
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid #3498db;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    border-radius: 5px;
-    transition: transform 0.1s ease, background-color 0.1s ease;
+    pointer-events: auto;
+    transition: all 0.3s;
+}
+.control-button:nth-child(1) { top: 5%; left: 50%; transform: translateX(-50%); }
+.control-button:nth-child(2) { bottom: 15%; left: 50%; transform: translateX(-50%); }
+.control-button:nth-child(3) { left: 30%; top: 50%; transform: translateY(-50%); }
+.control-button:nth-child(4) { right: 30%; top: 50%; transform: translateY(-50%); }
+.control-button:hover {
+    background-color: #f0f0f0;
+}
+
+.control-button:focus {
+    outline: 2px solid #000;
+    background-color: #e0e0e0;
 }
 
 .control-button.active {
     background-color: #d1d1d1;
     transform: scale(0.95);
+}
+
+.control-button:hover {
+    background: #3498db;
+    color: white;
+}
+
+.control-button.current {
+    background: #2ecc71;
+    color: white;
+    border-color: #27ae60;
+    animation: pulse 1.5s infinite;
+}
+
+.control-button.wrong {
+    background: #e74c3c;
+    color: white;
+    border-color: #c0392b;
 }
 
 .toggle-button {
@@ -109,22 +179,14 @@ body {
     cursor: pointer;
 }
 
-.control-button.current {
-    background-color: lightblue;
-}
-
-.control-button.wrong {
-    background-color: red;
-}
-
 .leaderboard {
-    width: 250px;
+    width: 300px;
     padding: 1rem;
     background-color: #ffffff;
     border: 1px solid #ccc;
     border-radius: 8px;
     position: fixed;
-    left: -290px; /* 移除空格 */
+    left: -340px;
     top: 50%;
     transform: translateY(-50%);
     transition: left 0.3s ease-in-out;
@@ -132,13 +194,14 @@ body {
     max-height: 80vh;
     overflow-y: auto;
     z-index: 1000;
-  }
-  
-  .leaderboard.open {
+}
+
+.leaderboard.open {
     left: 0;
-  }
-  
-  .toggle-button {
+    box-shadow: 10px 10px 10px 3px #0005;
+}
+
+.toggle-button {
     position: fixed;
     left: 0;
     top: 50%;
@@ -150,11 +213,12 @@ body {
     cursor: pointer;
     z-index: 1001;
     transition: left 0.3s ease-in-out;
-  }
-  
-  .toggle-button.open {
-    left: 290px;
-  }
+}
+
+.toggle-button.open {
+    left: 340px;
+}
+
 .play-button {
     background-color: #000000;
     color: #ffffff;
@@ -171,4 +235,22 @@ body {
 .frame-counter {
     margin-top: 1rem;
     color: #666;
+}
+
+.update-status {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(52, 152, 219, 0.9);
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 30px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    z-index: 1000;
+    animation: slideUp 0.3s ease-out;
+  }
+  
+.update-status.exit {
+    animation: slideDown 0.3s ease-out forwards;
 }
