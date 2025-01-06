@@ -23,6 +23,10 @@ export class UserRoute extends Route{
             this.Contorller.login(req, res);
         })
 
+        this.router.post(`${this.url}logout`, (req, res) => {
+            this.Contorller.logout(req, res);
+        })
+
         this.router.get(`${this.url}getAllPoints`,(req, res)=>{
             this.Contorller.getAllPoints(req, res);
         })

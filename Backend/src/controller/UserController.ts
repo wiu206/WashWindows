@@ -24,6 +24,11 @@ export class UserController extends Contorller {
         Response.status(resp.code).send(resp);
     }
 
+    public async logout(Request: Request, Response: Response) {
+        const resp = await this.service.logout(Request);
+        Response.status(resp.code).send(resp);
+    }
+
     public async getAllPoints(Request: Request, Response: Response) {
         const res: resp<Array<DBResp<Document>> | undefined> = {
             code: 200,
@@ -44,17 +49,17 @@ export class UserController extends Contorller {
     }
 
     public async updateByUserId(Request: Request, Response: Response) {
-        const resp = await this.service.updateByUserId(Request.body);
+        const resp = await this.service.updateByUserId(Request);
         Response.status(resp.code).send(resp);
     }
 
     public async updatePoitns(Request: Request, Response: Response) {
-        const resp = await this.service.updatePoints(Request.body);
+        const resp = await this.service.updatePoints(Request);
         Response.status(resp.code).send(resp);
     }
 
     public async deleteByUserId(Request: Request, Response: Response) {
-        const resp = await this.service.deleteByUserId(Request.body);
+        const resp = await this.service.deleteByUserId(Request);
         Response.status(resp.code).send(resp);
     }
 }
