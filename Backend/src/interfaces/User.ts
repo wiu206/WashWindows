@@ -3,5 +3,6 @@ export interface User{
     username: string;
     password: string;
     email?: string;
+    userRole: string;
     points?: number;
 }
