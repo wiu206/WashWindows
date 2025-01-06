@@ -1,0 +1,117 @@
+@font-face {
+  font-family: "Font";
+  src: url("/assets/zh_tw.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: linear-gradient(to right, #2c3e50, #3498db);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.btn {
+  left: 100px;
+  text-decoration: none;
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+  transition: transform 0.3s;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+}
+
+.button-group {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.button {
+  text-decoration: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: 20px;
+  background-color: rgba(255,255,255,0.15);
+  color: white;
+  transition: all 0.3s;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
+.button:hover {
+  background-color: rgba(255,255,255,0.25);
+  transform: translateY(-2px);
+}
+
+.user-info {
+  position: relative;
+  padding: 0.5rem 1rem;
+  color: white;
+  cursor: pointer;
+  border-radius: 20px;
+  transition: all 0.3s;
+}
+
+.user-info:hover {
+  background-color: rgba(255,255,255,0.1);
+}
+
+.user-info:hover .dropdown {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  min-width: 200px;
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.dropdown a {
+  display: block;
+  text-decoration: none;
+  color: #2c3e50;
+  padding: 0.8rem 1rem;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.dropdown a:hover {
+  background-color: #f8f9fa;
+  color: #3498db;
+  transform: translateX(5px);
+}
+
+.dropdown button {
+  width: 100%;
+  padding: 0.8rem;
+  margin-top: 0.5rem;
+  border: none;
+  background-color: #e74c3c;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.dropdown button:hover {
+  background-color: #c0392b;
+  transform: translateY(-2px);
+}
