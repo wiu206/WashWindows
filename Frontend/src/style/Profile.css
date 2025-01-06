@@ -1,0 +1,93 @@
+.profile-page {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: #f9f9f9;
+  padding: 20px;
+}
+  
+.profile-container {
+  margin-top: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 400px;
+  margin: 20px auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+  
+  .image-container {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #eee;
+  }
+  
+  .image-label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+  }
+  
+  .placeholder {
+    font-size: 14px;
+    color: #888;
+  }
+  
+  .profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  #image-upload {
+    display: none;
+  }
+  
+  .user-info {
+    margin-top: 15px;
+    cursor: auto;
+  }
+  
+  .username {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .edit-icon {
+    font-size: 14px;
+    cursor: pointer;
+    color: #007bff;
+  }
+  
+  .stats {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #555;
+  }
+  
+  .action-buttons {
+    margin-top: 20px;
+  }
+  
+  .button {
+    background-color: #ffffff;
+    color: #000000;
+    border: 1 #000000;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  .button:hover {
+    background-color: #818991;
+  }
+  
