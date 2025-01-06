@@ -4,22 +4,6 @@
   background-color: white;
 }
 
-.btn {
-  text-decoration: none;
-  color: #ffffff;
-  font-size: 35px;
-}
-
-.header {
-  background-color: black;
-  color: white;
-  padding: 1rem;
-}
-
-.header h1 {
-  margin: 0;
-}
-
 .form-container {
   max-width: 400px;
   margin: 2rem auto;
