@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../style/Login.css';
 
 const Login: React.FC = () => {
@@ -6,6 +7,8 @@ const Login: React.FC = () => {
     username: '',
     password: ''
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -16,12 +19,15 @@ const Login: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    // 假設登入成功後，執行跳轉邏輯
+    navigate('/', { state: { showAvatar: true } }); // 傳遞狀態 `showAvatar`
   };
 
   return (
     <div className="container">
       <header className="header">
-       <a className='btn' href='#/'>Washwindows Game</a>
+        <a className="btn" href="#/">Washwindows Game</a>
       </header>
       
       <div className="form-container">
