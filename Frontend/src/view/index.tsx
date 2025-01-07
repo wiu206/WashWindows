@@ -4,15 +4,10 @@ import Rag from "../assets/rag.png";
 import Dirty from "../assets/dirty.png";
 import { User } from '../interface/User';
 import '../style/index.css';
-import { asyncGet, asyncPut } from '../utils/fetch';
+import { asyncPut } from '../utils/fetch';
 import { user_api } from '../enum/api';
 import Header from '../component/Header';
 import RankList from '../component/RankList';
-
-interface RankItem {
-  username: string;
-  points: number;
-}
 
 export const WashWindowsGame: React.FC = () => {
   const [points, setPoints] = useState<number>(0);
