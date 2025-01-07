@@ -5,4 +5,5 @@ export interface User{
     email?: string;
     userRole: string;
     points?: number;
+    clicked?: number;
 }
