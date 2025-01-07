@@ -52,8 +52,8 @@ export class AuthService extends Service {
             const newUserInfo = {
                 ...info,
                 password: hashedPassword,
-                _id: undefined,
-                points: 0
+                points: 0,
+                clicked: 0,
             };
     
             const res = new userModel(newUserInfo);
