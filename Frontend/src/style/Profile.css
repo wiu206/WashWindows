@@ -1,93 +1,208 @@
 .profile-page {
   font-family: Arial, sans-serif;
   text-align: center;
-  background-color: #f9f9f9;
+  background-color: #ffffff;
   padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  box-sizing: border-box;
+  color: #fff;
 }
-  
+
 .profile-container {
+  background-color: rgba(255, 255, 255, 0.9);
+  border: none; 
+  border-radius: 15px;
+  padding: 30px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.profile-container .image-container {
+  position: relative;
+  height: 50px;
+  margin: 0 auto;
+  border: 4px solid #000000;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #ddd;
+}
+
+.profile-container .image-label {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+
+.profile-container .profile-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-container #image-upload {
+  display: none;
+}
+
+.profile-container .user-info {
   margin-top: 20px;
-  background-color: #fff;
-  border: 1px solid #ccc;
+}
+
+.profile-container .username {
+  font-size: 24px; 
+  font-weight: bold;
+  color: #333;
+}
+
+.profile-container .edit-icon {
+  font-size: 16px;
+  cursor: pointer;
+  color: #0984e3;
+  margin-left: 10px;
+}
+
+.profile-container .edit-icon:hover {
+  color: #74b9ff; /* 淡藍色點擊效果 */
+}
+
+.profile-container .stats {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #555;
+}
+
+.profile-container .action-buttons {
+  margin-top: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px; /* 按鈕之間的間距 */
+}
+
+.profile-container .button {
+  background-color: #0984e3;
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 30px; /* 圓形按鈕 */
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile-container .button:hover {
+  background-color: #74b9ff; /* 淡藍色 */
+  transform: translateY(-2px); /* 輕微提升效果 */
+}
+
+.profile-container .button:active {
+  transform: translateY(2px); /* 點擊時稍微下壓 */
+}
+
+/* 小螢幕適配 */
+@media (max-width: 768px) {
+  .profile-container {
+    padding: 20px;
+  }
+
+  .profile-container .username {
+    font-size: 20px;
+  }
+
+  .profile-container .stats {
+    font-size: 14px;
+  }
+
+  .profile-container .button {
+    font-size: 14px;
+    padding: 10px 16px;
+  }
+}
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #fff;
   border-radius: 10px;
   padding: 20px;
   max-width: 400px;
-  margin: 20px auto;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
-  
-  .image-container {
-    position: relative;
-    width: 120px;
-    height: 120px;
-    margin: 0 auto;
-    border: 2px solid #ccc;
-    border-radius: 50%;
-    overflow: hidden;
-    background-color: #eee;
-  }
-  
-  .image-label {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
-  }
-  
-  .placeholder {
-    font-size: 14px;
-    color: #888;
-  }
-  
-  .profile-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  #image-upload {
-    display: none;
-  }
-  
-  .user-info {
-    margin-top: 15px;
-    cursor: auto;
-  }
-  
-  .username {
-    font-size: 18px;
-    font-weight: bold;
-  }
-  
-  .edit-icon {
-    font-size: 14px;
-    cursor: pointer;
-    color: #007bff;
-  }
-  
-  .stats {
-    margin-top: 5px;
-    font-size: 14px;
-    color: #555;
-  }
-  
-  .action-buttons {
-    margin-top: 20px;
-  }
-  
-  .button {
-    background-color: #ffffff;
-    color: #000000;
-    border: 1 #000000;
-    padding: 10px 20px;
-    margin: 5px;
-    border-radius: 5px;
-    font-size: 14px;
-  }
-  
-  .button:hover {
-    background-color: #818991;
-  }
-  
+
+.modal h3 {
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.modal p {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.modal-input-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.modal-input-group label {
+  display: block;
+  font-size: 0.9rem;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.modal-input-group input {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.modal .button {
+  background-color: #0077ff;
+}
+
+.modal-actions .button {
+  flex: 1;
+}
+
+.modal-actions .button.cancel {
+  background-color: #ff7675;
+}
+
+.modal-actions .button.cancel:hover {
+  background-color: #d63031;
+}

@@ -1,22 +1,21 @@
-.container {
+.login-container {
   width: 100%;
   min-height: 100vh;
   background-color: white;
 }
 
-.form-container {
+.login-container .form-container {
   max-width: 400px;
   margin: 2rem auto;
-  padding: 0 1rem;
 }
 
-.title {
+.login-container .title {
   text-align: center;
   font-size: 2rem;
   margin-bottom: 2rem;
 }
 
-.input-field {
+.login-container .input-field {
   width: 100%;
   padding: 0.8rem;
   margin-bottom: 1rem;
@@ -25,8 +24,8 @@
   font-size: 1rem;
 }
 
-.login-button {
-  width: 107%;
+.login-container .login-button {
+  width: 100%;
   padding: 0.8rem;
   background-color: black;
   color: white;

@@ -45,7 +45,7 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="container">
+    <div className="login-container">
       <div className="form-container">
         <h2 className="title">登入</h2>
         {error && <div className="error-message">{error}</div>}
