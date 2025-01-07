@@ -41,7 +41,7 @@ export class UserService extends Service {
             const decoded = verifyToken(token) as { _id: string, userRole: string };
     
             // 檢查權限
-            const { _id, username, email } = Request.body; // 從 body 取得要更新的用戶 ID
+            const { _id, username } = Request.body; // 從 body 取得要更新的用戶 ID
     
             if (decoded.userRole !== 'admin' && decoded._id !== _id) { // 檢查是否為管理員或本人
                 resp.code = 403;
@@ -49,16 +49,9 @@ export class UserService extends Service {
                 return resp;
             }
     
-            if (!_id || !username || !email) {
+            if (!_id || !username ) {
                 resp.code = 400;
                 resp.message = "缺少必要資料";
-                return resp;
-            }
-    
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                resp.code = 400;
-                resp.message = "電子郵件格式錯誤";
                 return resp;
             }
     
@@ -69,19 +62,16 @@ export class UserService extends Service {
                 return resp;
             }
     
-            if (existingUser.username === username && existingUser.email === email) {
+            if (existingUser.username === username) {
                 resp.code = 304;
                 resp.message = "資料並未有更新";
                 return resp;
             }
     
             existingUser.username = username;
-            existingUser.email = email;
     
-            await existingUser.save();
-            
             resp.message = "更新資料成功";
-            resp.body = existingUser;
+            resp.body = await existingUser.save();
             return resp;
     
         } catch (error) {
@@ -108,7 +98,7 @@ export class UserService extends Service {
 
             const token = authHeader.split(' ')[1];
             const decoded = verifyToken(token) as { _id: string, userRole: string };
-            const { _id, points } = Request.body;
+            const { _id, points, clicked } = Request.body;
 
             if (decoded.userRole !== 'admin' && decoded._id !== _id) { // 檢查是否為管理員或本人
                 resp.code = 403;
@@ -116,7 +106,7 @@ export class UserService extends Service {
                 return resp;
             }
 
-            if (!_id || !points) {
+            if (!_id || !points || !clicked) {
                 resp.code = 400;
                 resp.message = "缺少必要資料";
                 return resp;
@@ -128,6 +118,8 @@ export class UserService extends Service {
                 return resp;
             }
             existingUser.points = points;
+            existingUser.clicked = clicked;
+            
             await existingUser.save();
 
             resp.message = "點數更新成功";

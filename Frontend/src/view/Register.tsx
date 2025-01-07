@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../style/Register.css';
+import { asyncPost } from '../utils/fetch';
+import { auth_api } from '../enum/api';
 
 const Register: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -21,38 +23,53 @@ const Register: React.FC = () => {
     });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError(null);
-  
-    // 表單驗證
+  // 驗證表單輸入
+  const validInput = (): boolean => {
     if (!formData.email || !formData.username || !formData.password || !formData.confirmPassword) {
-      setError("請填寫所有欄位");
-      return;
+      setError('請填寫所有欄位');
+      return false;
+    }
+    if (formData.username.length < 6 || formData.username.length > 12) {
+      setError('帳號必須介於 6 到 12 個字元');
+      return false;
+    }
+    if (formData.password.length < 8) {
+      setError('密碼必須大於 8 位字元');
+      return false;
     }
     if (formData.password !== formData.confirmPassword) {
       setError('密碼與確認密碼不相符');
-      return;
+      return false;
     }
-  
+    return true;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+
+    // 驗證輸入
+    if (!validInput()) return;
+
     setIsLoading(true);
-  
+
     try {
-      // 假設這裡有一個 API 呼叫
-      const response = await fetch('YOUR_API_ENDPOINT', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
+      const response = await asyncPost(auth_api.register, {
+        body: {
+          username: formData.username,
+          password: formData.password,
+          email: formData.email,
+          userRole: 'user'
+        }
       });
-  
-      if (!response.ok) {
-        throw new Error('註冊失敗');
+
+      if (response.status !== 200) {
+        const errorData = await response.json();
+        setError(errorData.message || '註冊失敗');
+        return;
       }
-  
+
       const data = await response.json();
-      // 假設註冊成功後處理
       console.log('註冊成功:', data);
       navigate('/');
     } catch (error) {
@@ -65,14 +82,9 @@ const Register: React.FC = () => {
       setIsLoading(false);
     }
   };
-  
 
   return (
-    <div className="container">
-      <header className="header">
-        <a className='btn' href='#/'>Washwindows Game</a>
-      </header>
-      
+    <div className="register-container">
       <div className="form-container">
         <h2 className="title">註冊</h2>
         <form onSubmit={handleSubmit}>

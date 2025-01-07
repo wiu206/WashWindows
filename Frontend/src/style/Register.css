@@ -1,53 +1,96 @@
-.container {
+.register-container {
   width: 100%;
   min-height: 100vh;
-  background-color: white;
-}
-
-.btn {
-  text-decoration: none;
-  color: #ffffff;
-  font-size: 35px;
-}
-
-.header {
-  background-color: black;
-  color: white;
+  background-color: #f9f9f9; /* 淡灰色背景，減少純白的刺眼感 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 1rem;
 }
 
-.header h1 {
-  margin: 0;
-}
-
-.form-container {
+.register-container .form-container {
+  width: 100%;
   max-width: 400px;
-  margin: 2rem auto;
-  padding: 0 1rem;
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.title {
+.register-container .title {
   text-align: center;
   font-size: 2rem;
-  margin-bottom: 2rem;
+  font-weight: bold;
+  color: #333; /* 深灰色文字 */
+  margin-bottom: 1.5rem;
 }
 
-.input-field {
+.register-container .input-field {
   width: 100%;
   padding: 0.8rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.2rem;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 1rem;
+  color: #333;
+  background-color: #fdfdfd; /* 提供微妙對比的背景色 */
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-.register-button {
-  width: 107%;
+.register-container .input-field:focus {
+  border-color: #007bff; /* 聚焦時顯示藍色邊框 */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  outline: none;
+}
+
+.register-container .register-button {
+  width: 100%;
   padding: 0.8rem;
-  background-color: black;
+  background-color: #007bff;
   color: white;
   border: none;
   border-radius: 4px;
   font-size: 1rem;
+  font-weight: bold;
   cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.register-container .register-button:hover {
+  background-color: #0056b3; /* 滑鼠移上時的深藍色 */
+}
+
+.register-container .register-button:disabled {
+  background-color: #cccccc; /* 禁用時的灰色 */
+  cursor: not-allowed;
+}
+
+.register-container .error-message {
+  color: #ff0000;
+  font-size: 0.9rem;
+  text-align: center;
+  margin-bottom: 1rem; /* 與按鈕保持適當距離 */
+}
+
+@media (max-width: 768px) {
+  .register-container .form-container {
+    padding: 1.5rem;
+    max-width: 90%; /* 在小螢幕上表單更窄 */
+  }
+
+  .register-container .title {
+    font-size: 1.8rem; /* 小螢幕時調整標題大小 */
+  }
+
+  .register-container .input-field {
+    font-size: 0.9rem;
+  }
+
+  .register-container .register-button {
+    font-size: 0.9rem;
+    padding: 0.7rem;
+  }
 }

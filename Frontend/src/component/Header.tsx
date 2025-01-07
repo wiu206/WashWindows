@@ -26,7 +26,7 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn, user, onLogout }) => {
           </>
         ) : (
           <div className="user-info" onClick={toggleDropdown}>
-            Hi, {user?.username}
+            {user?.username}
             <div className={`dropdown ${isDropdownOpen ? 'open' : ''}`}>
               <a href="#/Profile">個人資料</a>
               <a href='#/Rank'>排行榜</a>

@@ -14,7 +14,7 @@
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
-.btn {
+.header .btn {
   left: 100px;
   text-decoration: none;
   color: white;
@@ -24,17 +24,17 @@
   transition: transform 0.3s;
 }
 
-.btn:hover {
+.header .btn:hover {
   transform: scale(1.05);
 }
 
-.button-group {
+.header .button-group {
   display: flex;
   gap: 1rem;
   align-items: center;
 }
 
-.button {
+.header .button {
   text-decoration: none;
   padding: 0.5rem 1.2rem;
   border-radius: 20px;
@@ -44,31 +44,32 @@
   border: 1px solid rgba(255,255,255,0.3);
 }
 
-.button:hover {
+.header .button:hover {
   background-color: rgba(255,255,255,0.25);
   transform: translateY(-2px);
 }
 
-.user-info {
+.header .user-info {
   position: relative;
   padding: 0.5rem 1rem;
+  font-size: 1.2rem;
   color: white;
   cursor: pointer;
   border-radius: 20px;
   transition: all 0.3s;
 }
 
-.user-info:hover {
+.header .user-info:hover {
   background-color: rgba(255,255,255,0.1);
 }
 
-.user-info:hover .dropdown {
+.header .user-info:hover .dropdown {
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
 }
 
-.dropdown {
+.header .dropdown {
   position: absolute;
   top: 100%;
   right: 0;
@@ -84,7 +85,7 @@
   z-index: 1000;
 }
 
-.dropdown a {
+.header .dropdown a {
   display: block;
   text-decoration: none;
   color: #2c3e50;
@@ -93,13 +94,14 @@
   transition: all 0.2s;
 }
 
-.dropdown a:hover {
+.header .dropdown a:hover {
   background-color: #f8f9fa;
+  
   color: #3498db;
   transform: translateX(5px);
 }
 
-.dropdown button {
+.header .dropdown button {
   width: 100%;
   padding: 0.8rem;
   margin-top: 0.5rem;
@@ -111,7 +113,7 @@
   transition: all 0.3s;
 }
 
-.dropdown button:hover {
+.header .dropdown button:hover {
   background-color: #c0392b;
   transform: translateY(-2px);
 }
